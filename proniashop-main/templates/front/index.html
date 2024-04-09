@@ -1,0 +1,500 @@
+{% extends 'front/base.html' %}
+{% load static %}
+{% block content %}
+        <!-- Begin Slider Area -->
+        <div class="slider-area">
+            <!-- Main Slider -->
+            <div class="swiper-container main-slider swiper-arrow with-bg_white">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide animation-style-01">
+                        <div class="slide-inner style-1 bg-height" data-bg-image="{% static 'front/images/slider/bg/1-1.jpg' %}">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 order-2 order-lg-1 align-self-center">
+                                        <div class="slide-content text-black">
+                                            <span class="offer">77% chegirma</span>
+                                            <h2 class="title">Pronia Company</h2>
+                                            <p class="short-desc">Pronia, 100% toza va halol mahsulot va buyumlarni bizdan harid qiling!</p>
+                                            <div class="btn-wrap">
+                                                <a class="btn btn-custom-size xl-size btn-pronia-primary" href="#">Hozir kashf qiling</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-8 offset-md-2 offset-lg-0 order-1 order-lg-2">
+                                        <div class="inner-img">
+                                            <div class="scene fill">
+                                                <div class="expand-width" data-depth="0.2">
+                                                    <img src="{% static 'front/images/slider/inner-img/product.jpg' %}" alt="Inner Image">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide animation-style-01">
+                        <div class="slide-inner style-1 bg-height" data-bg-image="{% static 'front/images/slider/bg/1-1.jpg' %}">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 order-2 order-lg-1 align-self-center">
+                                        <div class="slide-content text-black">
+                                            <span class="offer">77% chegirma</span>
+                                            <h2 class="title">Pronia Company</h2>
+                                            <p class="short-desc">Pronia, 100% tabiiy, organik va o'simliklar do'koni bilan.</p>
+                                            <div class="btn-wrap">
+                                                <a class="btn btn-custom-size xl-size btn-pronia-primary" href="#">Hozir kashf qiling</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-8 offset-md-2 offset-lg-0 order-1 order-lg-2">
+                                        <div class="inner-img">
+                                            <div class="scene fill">
+                                                <div class="expand-width" data-depth="0.2">
+                                                    <img src="{% static 'front/images/slider/inner-img/tool.jpg' %}" alt="Inner Image">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination d-md-none"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+        <!-- Slider Area End Here -->
+        <!-- Begin Product Area -->
+        <div class="product-area section-space-top-100">
+            <div class="container">
+                <div class="section-title-wrap">
+                    <h2 class="section-title mb-0">Mahsulotlarimiz</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="nav product-tab-nav tab-style-1" id="myTab" role="tablist">
+                            {% for category in categories %}
+                            <li class="nav-item" role="presentation">
+                                <a href="{% url 'front:product_list' category.code %}">
+                                    {{category.name}}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                                <div class="product-item-wrap row">
+                                    {% for product in products %}
+                                    <div class="col-xl-3 col-md-4 col-sm-6">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="{% url 'front:product_detail' product.code %}">
+                                                    <img class="primary-img" src="{{product.banner_img.url}}" alt="Product Images" >
+                                                </a>
+                                                {% if user.is_authenticated %}
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="{% url 'front:add_wishlist' product.code %}" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                {% if product.is_like %}
+                                                                <i class="fa fa-heart" style="color: red;"></i>
+                                                                {% else %}
+                                                                <i class="fa fa-heart-o"></i>
+                                                                {% endif %}
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn">
+                                                            <a href="{% url 'front:product_detail' product.code %}">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn">
+                                                            <a href="{% url 'front:add_to_cart' product.code %}">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>                                                  
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-content">
+                                                <a class="product-name" href="{% url 'front:product_detail' product.code %}">{{ product.name }}</a>
+                                                <div class="price-box pb-1">
+                                                    <span class="new-price">{{ product.price }} sum</span>
+                                                </div>
+                                                <div class="rating-box">
+                                                    <ul>
+                                                        {% for i in rating %}
+                                                        {% if i <= mark %}
+                                                        <li><i class="fa fa-star"></i></li>                                      
+                                                        {% else %}
+                                                        <li><i class="fa fa-star-o"></i></li>                                      
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="bestseller" role="tabpanel" aria-labelledby="bestseller-tab">
+                                <div class="product-item-wrap row">
+                                    <div class="col-xl-3 col-md-4 col-sm-6">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="shop.html">
+                                                    <img class="primary-img" src="{% static 'front/images/product/medium-size/1-5-270x300.jpg' %}" alt="Product Images">
+                                                    <img class="secondary-img" src="{% static 'front/images/product/medium-size/1-6-270x300.jpg' %}" alt="Product Images">
+                                                </a>
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-like"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                                            <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 col-sm-6 pt-4">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="shop.html">
+                                                    <img class="primary-img" src="{% static 'front/images/product/medium-size/1-2-270x300.jpg' %}" alt="Product Images">
+                                                    <img class="secondary-img" src="{% static 'front/images/product/medium-size/1-3-270x300.jpg' %}" alt="Product Images">
+                                                </a>
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-like"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                                            <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 col-sm-6">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="shop.html">
+                                                    <img class="primary-img" src="{% static 'front/images/product/medium-size/1-1-270x300.jpg' %}" alt="Product Images">
+                                                    <img class="secondary-img" src="{% static 'front/images/product/medium-size/1-2-270x300.jpg' %}" alt="Product Images">
+                                                </a>
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-like"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                                            <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 col-sm-6">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="shop.html">
+                                                    <img class="primary-img" src="{% static 'front/images/product/medium-size/1-2-270x300.jpg' %}" alt="Product Images">
+                                                    <img class="secondary-img" src="{% static 'front/images/product/medium-size/1-3-270x300.jpg' %}" alt="Product Images">
+                                                </a>
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-like"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                                            <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 col-sm-6 pt-4">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="shop.html">
+                                                    <img class="primary-img" src="{% static 'front/images/product/medium-size/1-5-270x300.jpg' %}" alt="Product Images">
+                                                    <img class="secondary-img" src="{% static 'front/images/product/medium-size/1-6-270x300.jpg' %}" alt="Product Images">
+                                                </a>
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-like"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                                            <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 col-sm-6 pt-4">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="shop.html">
+                                                    <img class="primary-img" src="{% static 'front/images/product/medium-size/1-6-270x300.jpg' %}" alt="Product Images">
+                                                    <img class="secondary-img" src="{% static 'front/images/product/medium-size/1-7-270x300.jpg' %}" alt="Product Images">
+                                                </a>
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-like"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                                            <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 col-sm-6 pt-4">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="shop.html">
+                                                    <img class="primary-img" src="{% static 'front/images/product/medium-size/1-3-270x300.jpg' %}" alt="Product Images">
+                                                    <img class="secondary-img" src="{% static 'front/images/product/medium-size/1-4-270x300.jpg' %}" alt="Product Images">
+                                                </a>
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-like"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                                            <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 col-sm-6 pt-4">
+                                        <div class="product-item">
+                                            <div class="product-img">
+                                                <a href="shop.html">
+                                                    <img class="primary-img" src="{% static 'front/images/product/medium-size/1-4-270x300.jpg' %}" alt="Product Images">
+                                                    <img class="secondary-img" src="{% static 'front/images/product/medium-size/1-5-270x300.jpg' %}" alt="Product Images">
+                                                </a>
+                                                <div class="product-add-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="wishlist.html" data-tippy="Add to wishlist" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-like"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
+                                                            <a href="#" data-tippy="Quickview" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-look"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme="sharpborder">
+                                                                <i class="pe-7s-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Product Area End Here -->
+        <!-- Begin Product Area -->
+        <div class="product-area section-space-top-100">
+            <div class="container">
+                <div class="row">
+                    <div class="section-title-wrap without-tab">
+                        <h2 class="section-title">Yangi Mahsulotlarimiz</h2>
+                        <p class="section-desc">Ommabop e'tiqoddan farqli o'laroq, Lorem Ipsum shunchaki tasodifiy matn emas. Unda bor
+                            Klassik lotin adabiyotining bir qismiga ildiz otgan
+                        </p>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="swiper-container product-slider">
+                            <div class="swiper-wrapper">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="tab-content" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                                                <div class="product-item-wrap row">
+                                                    {% for product in products %}
+                                                    <div class="col-xl-3 col-md-4 col-sm-6">
+                                                        <div class="product-item">
+                                                            <div class="product-img">
+                                                                <a href="{% url 'front:product_detail' product.code %}">
+                                                                    <img class="primary-img" src="{{product.new_img.url}}" alt="Product Images" >
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Product Area End Here -->
+        <!-- Begin Testimonial Area -->
+        <div class="testimonial-area section-space-top-90 section-space-bottom-95">
+            <div class="container-fluid">
+                <div class="testimonial-bg" data-bg-image="{% static 'front/images/testimonial/bg/1-1-1820x443.jpg' %}">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">Mijozlar nima deydi?</h2>
+                        <p class="section-desc mb-0">Ommabop e'tiqoddan farqli o'laroq, Lorem Ipsum shunchaki tasodifiy emas
+                            matn. Uning ildizlari klassik lotin adabiyotidan olingan
+                        </p>
+                    </div>
+                </div>
+                <div class="container custom-space">
+                    <div class="swiper-container testimonial-slider with-bg">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide testimonial-item">
+                                <div class="user-info mb-3">
+                                    <div class="user-shape-wrap">
+                                        <div class="user-img">
+                                            <img src="{% static 'front/images/testimonial/user/1.jpg' %}" alt="User Image">
+                                        </div>
+                                    </div>
+                                    <div class="user-content text-charcoal">
+                                        <h4 class="user-name mb-1">Elon Musk</h4>
+                                        <span class="user-occupation">Mijoz</span>
+                                    </div>
+                                </div>
+                                <p class="user-comment mb-6">Men Tesla companiyasi egasiman va mening tanlovim Pronia,
+                                    chunki har doim eng zo'ri bo'lgan.
+                                </p>
+                            </div>
+                            <div class="swiper-slide testimonial-item">
+                                <div class="user-info mb-3">
+                                    <div class="user-shape-wrap">
+                                        <div class="user-img">
+                                            <img src="{% static 'front/images/testimonial/user/2.jpg' %}" alt="User Image">
+                                        </div>
+                                    </div>
+                                    <div class="user-content text-charcoal">
+                                        <h4 class="user-name mb-1">Andrew Tate</h4>
+                                        <span class="user-occupation">Mijoz</span>
+                                    </div>
+                                </div>
+                                <p class="user-comment mb-6">Men odamlarni qanday qilib matritsadan olib chiqishga yordam beraman hamda ehtiyojimni qondirish uchun
+                                    shu web-sitedan foydalanaman, chunki yetkazib berish yorug'lik tezligida amalga oshiriladi.
+                                </p>
+                            </div>
+                            <div class="swiper-slide testimonial-item">
+                                <div class="user-info mb-3">
+                                    <div class="user-shape-wrap">
+                                        <div class="user-img">
+                                            <img src="{% static 'front/images/testimonial/user/3.jpg' %}" alt="User Image">
+                                        </div>
+                                    </div>
+                                    <div class="user-content text-charcoal">
+                                        <h4 class="user-name mb-1">Mark Zuckerberg</h4>
+                                        <span class="user-occupation">Client</span>
+                                    </div>
+                                </div>
+                                <p class="user-comment mb-6"> Men Instagramm egasiman va companiyamga kerak bo'lgan homashyoni Proniadan xarid qilaman,
+                                    chunki narxlar vashshe arzon.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination without-absolute"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial Area End Here -->
+        {% endblock content %}
